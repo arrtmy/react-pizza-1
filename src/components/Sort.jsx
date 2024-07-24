@@ -1,4 +1,13 @@
+import React, { useState } from 'react';
+
 const Sort = () => {
+  const [openPopap, setOpenPopap] = useState(false);
+  const [selectedPopap, setSelectedPopap] = useState(0);
+  const listPopap = ['популярности', 'цене', 'алфавиту'];
+  const closeOnClick = (listIndex) => {
+    setSelectedPopap(listIndex)
+    setOpenPopap(false)
+  }
   return (
     <div className="sort">
       <div className="sort__label">
@@ -14,15 +23,22 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span>популярности</span>
+        <span onClick={() => setOpenPopap(!openPopap)}>{listPopap[selectedPopap]}</span>
       </div>
-      <div className="sort__popup">
-        <ul>
-          <li className="active">популярности</li>
-          <li>цене</li>
-          <li>алфавиту</li>
-        </ul>
-      </div>
+      {openPopap && (
+        <div className="sort__popup">
+          <ul>
+            {listPopap.map((name, listIndex) => (
+              <li
+                key={listIndex}
+                onClick={() => closeOnClick(listIndex)}
+                className={selectedPopap === listIndex ? 'active' : ''}>
+                {name}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
     </div>
   );
 };
