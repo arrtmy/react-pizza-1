@@ -1,13 +1,18 @@
 import React, { useState } from 'react';
 
-const Sort = () => {
+const Sort = ({ sortType, onClickSort }) => {
   const [openPopap, setOpenPopap] = useState(false);
-  const [selectedPopap, setSelectedPopap] = useState(0);
-  const listPopap = ['популярности', 'цене', 'алфавиту'];
-  const closeOnClick = (listIndex) => {
-    setSelectedPopap(listIndex)
-    setOpenPopap(false)
-  }
+  const listPopap = [
+    { name: 'популярности', sortProperty: 'rating' },
+    { name: 'max цене', sortProperty: 'price' },
+    { name: 'min цене', sortProperty: '-price' },
+    { name: 'алфавиту', sortProperty: '-title' },
+  ];
+
+  const closeOnClick = (index) => {
+    onClickSort(index);
+    setOpenPopap(false);
+  };
   return (
     <div className="sort">
       <div className="sort__label">
@@ -23,17 +28,17 @@ const Sort = () => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpenPopap(!openPopap)}>{listPopap[selectedPopap]}</span>
+        <span onClick={() => setOpenPopap(!openPopap)}>{sortType.name}</span>
       </div>
       {openPopap && (
         <div className="sort__popup">
           <ul>
-            {listPopap.map((name, listIndex) => (
+            {listPopap.map((obj, index) => (
               <li
-                key={listIndex}
-                onClick={() => closeOnClick(listIndex)}
-                className={selectedPopap === listIndex ? 'active' : ''}>
-                {name}
+                key={index}
+                onClick={() => closeOnClick(obj)}
+                className={sortType.sortProperty === obj.sortProperty ? 'active' : ''}>
+                {obj.name}
               </li>
             ))}
           </ul>
