@@ -1,8 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 
 import styles from './Search.module.scss';
+import { SearchContext } from '../../App';
 
-const Search = ({ searchValue, setSearchValue }) => {
+const Search = () => {
+  const { searchValue, setSearchValue } = useContext(SearchContext);
+
   return (
     <div className={styles.root}>
       <svg
@@ -21,14 +24,20 @@ const Search = ({ searchValue, setSearchValue }) => {
         className={styles.input}
         placeholder="Поиск пиццы..."
       />
-      {searchValue && <svg onClick={() => setSearchValue('')} className={styles.clearSearch} viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
-        <defs></defs>
-        <title />
-        <g id="cross">
-          <line className={styles['cls-1']} x1="7" x2="25" y1="7" y2="25" />
-          <line className={styles['cls-1']} x1="7" x2="25" y1="25" y2="7" />
-        </g>
-      </svg>}
+      {searchValue && (
+        <svg
+          onClick={() => setSearchValue('')}
+          className={styles.clearSearch}
+          viewBox="0 0 32 32"
+          xmlns="http://www.w3.org/2000/svg">
+          <defs></defs>
+          <title />
+          <g id="cross">
+            <line className={styles['cls-1']} x1="7" x2="25" y1="7" y2="25" />
+            <line className={styles['cls-1']} x1="7" x2="25" y1="25" y2="7" />
+          </g>
+        </svg>
+      )}
     </div>
   );
 };
