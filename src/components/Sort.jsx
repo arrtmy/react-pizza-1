@@ -1,18 +1,25 @@
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSort } from '../redux/slices/filterSlice';
 
-const Sort = ({ sortType, onClickSort }) => {
+const listPopap = [
+  { name: 'популярности', sortProperty: 'rating' },
+  { name: 'max цене', sortProperty: 'price' },
+  { name: 'min цене', sortProperty: '-price' },
+  { name: 'алфавиту', sortProperty: '-title' },
+];
+
+const Sort = () => {
+  const dispatch = useDispatch()
+  const sort = useSelector(state => state.filter.sort)
+
   const [openPopap, setOpenPopap] = useState(false);
-  const listPopap = [
-    { name: 'популярности', sortProperty: 'rating' },
-    { name: 'max цене', sortProperty: 'price' },
-    { name: 'min цене', sortProperty: '-price' },
-    { name: 'алфавиту', sortProperty: '-title' },
-  ];
 
-  const closeOnClick = (index) => {
-    onClickSort(index);
+  const closeOnClick = (obj) => {
+    dispatch(setSort(obj))
     setOpenPopap(false);
   };
+  
   return (
     <div className="sort">
       <div className="sort__label">
@@ -28,7 +35,7 @@ const Sort = ({ sortType, onClickSort }) => {
           />
         </svg>
         <b>Сортировка по:</b>
-        <span onClick={() => setOpenPopap(!openPopap)}>{sortType.name}</span>
+        <span onClick={() => setOpenPopap(!openPopap)}>{sort.name}</span>
       </div>
       {openPopap && (
         <div className="sort__popup">
@@ -37,7 +44,7 @@ const Sort = ({ sortType, onClickSort }) => {
               <li
                 key={index}
                 onClick={() => closeOnClick(obj)}
-                className={sortType.sortProperty === obj.sortProperty ? 'active' : ''}>
+                className={sort.sortProperty === obj.sortProperty ? 'active' : ''}>
                 {obj.name}
               </li>
             ))}
