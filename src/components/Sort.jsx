@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort } from '../redux/slices/filterSlice';
 
-const listPopap = [
+export const listPopap = [
   { name: 'популярности', sortProperty: 'rating' },
   { name: 'max цене', sortProperty: 'price' },
   { name: 'min цене', sortProperty: '-price' },
