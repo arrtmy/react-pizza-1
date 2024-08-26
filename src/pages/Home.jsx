@@ -17,6 +17,7 @@ const Home = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
+  const isMounted = useRef(false);
 
   const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
 
@@ -39,6 +40,8 @@ const Home = () => {
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const category = categoryId > 0 ? `category=${categoryId}` : '';
     const search = searchValue ? `&search=${searchValue}` : '';
+
+    // Альтернативный вариант с fetch, но он устарел и хуже
     // fetch(
     //   `https://66a1c0fa967c89168f1d8196.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
     // )
@@ -47,6 +50,7 @@ const Home = () => {
     //     setPizzas(arr);
     //     setIsLoading(false);
     //   });
+
     axios
       .get(
         `https://66a1c0fa967c89168f1d8196.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
@@ -56,6 +60,22 @@ const Home = () => {
         setIsLoading(false);
       });
   };
+
+  // Если изменили параметры и был первый рендер, то делаем это
+  useEffect(() => {
+    if (isMounted.current) {
+      const querySrting = qs.stringify({
+        sortProperty: sort.sortProperty,
+        categoryId,
+        currentPage,
+      });
+
+      navigate(`?${querySrting}`);
+    }
+    isMounted.current = true;
+  }, [categoryId, sort.sortProperty, currentPage]);
+
+  //Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
@@ -71,6 +91,7 @@ const Home = () => {
     }
   }, []);
 
+  // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     window.scrollTo(0, 0);
     if (!isSearch.current) {
@@ -78,16 +99,6 @@ const Home = () => {
     }
     isSearch.current = false;
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
-
-  useEffect(() => {
-    const querySrting = qs.stringify({
-      sortProperty: sort.sortProperty,
-      categoryId,
-      currentPage,
-    });
-
-    navigate(`?${querySrting}`);
-  }, [categoryId, sort.sortProperty, currentPage]);
 
   const pizza = pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
 
