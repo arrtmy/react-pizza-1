@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import { setCategoryId, setCurrentPage, setFilters } from '../redux/slices/filterSlice';
+import { setItems } from '../redux/slices/pizzaSlice.js'
 
 import Categories from '../components/Categories';
 import Sort, { listPopap } from '../components/Sort';
@@ -19,10 +20,12 @@ const Home = () => {
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
+  const pizzas = useSelector((state) => state.pizza.items);
+
   const { categoryId, sort, currentPage } = useSelector((state) => state.filter);
 
   const { searchValue } = useContext(SearchContext);
-  const [pizzas, setPizzas] = useState([]);
+  
   const [isLoading, setIsLoading] = useState(true);
 
   const onClickCategory = (id) => {
@@ -33,7 +36,7 @@ const Home = () => {
     dispatch(setCurrentPage(number));
   };
 
-  const fetchPizzas = () => {
+  const fetchPizzas = async () => {
     setIsLoading(true);
 
     const sortBy = sort.sortProperty.replace('-', '');
@@ -51,14 +54,32 @@ const Home = () => {
     //     setIsLoading(false);
     //   });
 
-    axios
-      .get(
+    // axios
+    //   .get(
+    //     `https://66a1c0fa967c89168f1d8196.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
+    //   )
+    //   .then((res) => {
+    //     setPizzas(res.data);
+    //     setIsLoading(false);
+    //   })
+    //   .catch((err) => {
+    //     setIsLoading(false);
+    //   })
+
+    try {
+      const { data } = await axios.get(
         `https://66a1c0fa967c89168f1d8196.mockapi.io/pizzas?page=${currentPage}&limit=4&${category}&sortBy=${sortBy}&order=${order}${search}`,
-      )
-      .then((res) => {
-        setPizzas(res.data);
-        setIsLoading(false);
-      });
+      );
+      dispatch(setItems(data));
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.log('ERROR', error);
+    } finally {
+      setIsLoading(false);
+    }
+
+    window.scrollTo(0, 0);
   };
 
   // Если изменили параметры и был первый рендер, то делаем это
@@ -101,7 +122,6 @@ const Home = () => {
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
   const pizza = pizzas.map((obj) => <PizzaBlock key={obj.id} {...obj} />);
-
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
   return (
