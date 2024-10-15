@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { setSort } from '../redux/slices/filterSlice';
+import { setSort, selectSort } from '../redux/slices/filterSlice';
 
 export const listPopap = [
   { name: 'популярности', sortProperty: 'rating' },
@@ -11,7 +11,7 @@ export const listPopap = [
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const sort = useSelector((state) => state.filter.sort);
+  const sort = useSelector(selectSort) // filterSlice
   const sortRef = useRef();
 
   const [openPopap, setOpenPopap] = useState(false);
