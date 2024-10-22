@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { FC, useEffect, useRef } from 'react';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
@@ -8,16 +8,16 @@ import {
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from '../redux/slices/filterSlice';
+} from '../redux/slices/filterSlice.js';
 import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice.js';
 
-import Categories from '../components/Categories';
-import Sort, { listPopap } from '../components/Sort';
-import PizzaBlock from '../components/PizzaList/PizzaBlock';
-import Skeleton from '../components/PizzaList/Skeleton';
-import Pagination from '../components/Pagination';
+import Categories from '../components/Categories.tsx';
+import Sort, { listPopap } from '../components/Sort.tsx';
+import PizzaBlock from '../components/PizzaList/PizzaBlock.tsx';
+import Skeleton from '../components/PizzaList/Skeleton.tsx';
+import Pagination from '../components/Pagination/index.tsx';
 
-const Home = () => {
+const Home: FC = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const isSearch = useRef(false);
@@ -27,12 +27,12 @@ const Home = () => {
 
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter); // filterSlice
 
-  const onClickCategory = (id) => {
-    dispatch(setCategoryId(id));
+  const onClickCategory = (index: number) => {
+    dispatch(setCategoryId(index));
   };
 
-  const onChangePage = (number) => {
-    dispatch(setCurrentPage(number));
+  const onChangePage = (page: number) => {
+    dispatch(setCurrentPage(page));
   };
 
   const getPizzas = async () => {
@@ -42,6 +42,7 @@ const Home = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
+      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
@@ -89,17 +90,16 @@ const Home = () => {
     getPizzas();
   }, [categoryId, sort.sortProperty, searchValue, currentPage]);
 
-  const pizzas = items.map((obj) => (
-    // <Link key={obj.id} to={`/pizza/${obj.id}`}>
-      <PizzaBlock key={obj.id} {...obj} />
-    // </Link>
-  ));
+  const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
 
   return (
     <div className="container">
       <div className="content__top">
-        <Categories categoryId={categoryId} onClickCategory={onClickCategory} />
+        <Categories
+          categoryId={categoryId}
+          onClickCategory={onClickCategory}
+        />
         <Sort />
       </div>
       <h2 className="content__title">Все пиццы</h2>

@@ -2,7 +2,12 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setSort, selectSort } from '../redux/slices/filterSlice';
 
-export const listPopap = [
+type ListItom = {
+  name: string;
+  sortProperty: string;
+};
+
+export const listPopap: ListItom[] = [
   { name: 'популярности', sortProperty: 'rating' },
   { name: 'max цене', sortProperty: 'price' },
   { name: 'min цене', sortProperty: '-price' },
@@ -11,28 +16,15 @@ export const listPopap = [
 
 const Sort = () => {
   const dispatch = useDispatch();
-  const sort = useSelector(selectSort) // filterSlice
-  const sortRef = useRef();
+  const sort = useSelector(selectSort); // filterSlice
+  const sortRef = useRef<HTMLDivElement>(null);
 
   const [openPopap, setOpenPopap] = useState(false);
 
-  const closeOnClick = (obj) => {
+  const closeOnClick = (obj: ListItom) => {
     dispatch(setSort(obj));
     setOpenPopap(false);
   };
-
-  useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (!event.path === sortRef) {
-        setOpenPopap(false);
-      }
-    };
-
-    document.body.addEventListener('click', handleClickOutside);
-
-    return () => document.body.removeEventListener('click', handleClickOutside)
-    
-  }, []);
 
   return (
     <div ref={sortRef} className="sort">
