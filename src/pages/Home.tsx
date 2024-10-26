@@ -1,6 +1,6 @@
-import React, { FC, useEffect, useRef } from 'react';
+import React, { FC, useCallback, useEffect, useRef } from 'react';
 import qs from 'qs';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 
 import {
@@ -8,18 +8,20 @@ import {
   setCategoryId,
   setCurrentPage,
   setFilters,
-} from '../redux/slices/filterSlice.js';
-import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice.js';
+} from '../redux/slices/filterSlice.ts';
+
+import { fetchPizzas, selectPizzaData } from '../redux/slices/pizzaSlice.ts';
 
 import Categories from '../components/Categories.tsx';
 import Sort, { listPopap } from '../components/Sort.tsx';
 import PizzaBlock from '../components/PizzaList/PizzaBlock.tsx';
 import Skeleton from '../components/PizzaList/Skeleton.tsx';
 import Pagination from '../components/Pagination/index.tsx';
+import { useAppDispatch } from '../redux/store.ts';
 
 const Home: FC = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const isSearch = useRef(false);
   const isMounted = useRef(false);
 
@@ -27,9 +29,9 @@ const Home: FC = () => {
 
   const { categoryId, sort, currentPage, searchValue } = useSelector(selectFilter); // filterSlice
 
-  const onClickCategory = (index: number) => {
+  const onClickCategory = useCallback((index: number) => {
     dispatch(setCategoryId(index));
-  };
+  }, [])
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
@@ -42,13 +44,12 @@ const Home: FC = () => {
     const search = searchValue ? `&search=${searchValue}` : '';
 
     dispatch(
-      // @ts-ignore
       fetchPizzas({
         sortBy,
         order,
         category,
         search,
-        currentPage,
+        currentPage: String(currentPage),
       }),
     );
 
@@ -73,13 +74,14 @@ const Home: FC = () => {
   useEffect(() => {
     if (window.location.search) {
       const params = qs.parse(window.location.search.substring(1));
-      const sort = listPopap.find((obj) => obj.sortProperty === params.sortProperty);
-
+      const sort = listPopap.find((obj) => obj.sortProperty === params.sortBy);
       dispatch(
         setFilters({
-          ...params,
-          sort,
-        }),
+          categoryId: Number(params.category),
+          currentPage: Number(params.currentPage),
+          searchValue: String(params.search),
+          sort: sort || listPopap[0]
+        })
       );
       isSearch.current = true;
     }
@@ -96,11 +98,8 @@ const Home: FC = () => {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories
-          categoryId={categoryId}
-          onClickCategory={onClickCategory}
-        />
-        <Sort />
+        <Categories categoryId={categoryId} onClickCategory={onClickCategory} />
+        <Sort value={sort}/>
       </div>
       <h2 className="content__title">Все пиццы</h2>
       {status === 'error' ? (

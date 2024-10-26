@@ -1,6 +1,0 @@
-{
-//   "compilerOptions": {
-    
-//   },
-  "include" : ["src", "src/@types/assets.d.ts"]
-}

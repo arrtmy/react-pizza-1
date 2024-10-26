@@ -15,7 +15,7 @@ body {
   border-radius: 10px;
   max-width: 1400px;
 
-  @media (max-width:645px) {
+  @media (max-width: 645px) {
     width: calc(100vw - 30px);
     margin-top: 15px;
   }
@@ -42,7 +42,8 @@ body {
   &__title {
     font-weight: 800;
     margin-top: 60px;
-    margin-bottom: 50px;  }
+    margin-bottom: 50px;
+  }
 
   &__items {
     display: grid;
@@ -78,7 +79,6 @@ body {
       }
     }
   }
-
 }
 .container {
   width: $container-width;
@@ -201,6 +201,22 @@ body {
         svg {
           path:first-of-type {
             display: none;
+          }
+        }
+        &:disabled {
+          opacity: 0.4;
+          border-color: #777272;
+
+          &:active {
+            transform: none;
+          }
+
+          &:hover {
+            background-color: transparent;
+          }
+
+          svg path {
+            fill: #7a7676;
           }
         }
       }
