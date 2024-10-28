@@ -5,7 +5,7 @@ import { calcTotalPrice } from '../../utils/calcTotalPrice.ts';
 
 
 export type CartItemType = {
-  id: string
+  id: string | number
   title: string
   type: string
   price: number

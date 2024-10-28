@@ -13,7 +13,7 @@ type PizzaBlockProps = {
   price: number
   imageUrl: string
   sizes: number[]
-  types: string[]
+  types: number[]
   rating: SortType
 };
 
