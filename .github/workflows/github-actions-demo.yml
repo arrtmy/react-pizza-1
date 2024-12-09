@@ -3,10 +3,10 @@ run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
 on: [push]
 jobs:
   init:
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [20.x]
+        node-version: [19.x]
     steps:
       - uses: actions/checkout@v4
       - name: Strating Node.js ${{ matrix.node-version }}
