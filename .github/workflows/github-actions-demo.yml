@@ -35,4 +35,4 @@ jobs:
       - name: DAST scan
         uses: PortSwigger/dastardly-github-action@main
         with:
-          target-url: 'https://ginandjuice.shop'
+          target-url: 'https://zesty-pithivier-c05109.netlify.app'
