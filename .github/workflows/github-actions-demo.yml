@@ -35,7 +35,7 @@ jobs:
         with:
           name: reports
           path: reports
-      - name: ZAP Scan    
-        uses: zaproxy/action-af@v0.1.0
+      - name: ZAP Scan
+        uses: zaproxy/action-full-scan@v0.1.0
         with:
-          plan: '.github/workflows/github-actions-demo.yml'
+          target: 'http://localhost:3001'
