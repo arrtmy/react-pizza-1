@@ -28,14 +28,17 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
+      - name: start server
+        run: npm run start
       - uses: AppThreat/sast-scan-action@master
         with:
-          type: 'python'
-      - uses: actions/upload-artifact@v4
+          type: 'javascript'
+      - name: SAST scan   
+        uses: actions/upload-artifact@v4
         with:
           name: reports
           path: reports
-      - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.1.0
+      - name: Run Dastardly Action Step
+        uses: PortSwigger/dastardly-github-action@main
         with:
-          target: 'http://localhost:3001'
+          target-url: 'http://localhost:3000'
