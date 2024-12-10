@@ -28,15 +28,11 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
-      - uses: AppThreat/sast-scan-action@master
+      - name: SAST scan      
+        uses: AppThreat/sast-scan-action@master
         with:
-          type: 'javascript'
-      - name: SAST scan   
-        uses: actions/upload-artifact@v4
-        with:
-          name: reports
-          path: reports
-      - name: Run Dastardly Action Step
+          type: 'python'
+      - name: DAST scan
         uses: PortSwigger/dastardly-github-action@main
         with:
           target-url: 'https://ginandjuice.shop'
