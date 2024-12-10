@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useCallback, useRef, useState } from 'react';
+import React, { ChangeEvent, FC, useCallback, useMemo, useRef, useState } from 'react';
 import debounce from 'lodash.debounce';
 import styles from './Search.module.scss';
 import { useDispatch } from 'react-redux';
@@ -12,19 +12,24 @@ const Search: FC = () => {
   const onClickClear = () => {
     dispatch(setSearchValue(''));
     setValue('');
-    inputRef.current?.focus()
+    inputRef.current?.focus();
   };
 
   const updateSearchValue = useCallback(
-    debounce((str) => {
+    (str: string) => {
       dispatch(setSearchValue(str));
-    }, 150),
-    [],
+    },
+    [dispatch],
+  );
+
+  const debouncedUpdateSearchValue = useMemo(
+    () => debounce(updateSearchValue, 150),
+    [updateSearchValue],
   );
 
   const onChangeInput = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value);
-    updateSearchValue(event.target.value);
+    debouncedUpdateSearchValue(event.target.value);
   };
 
   return (
@@ -63,5 +68,4 @@ const Search: FC = () => {
     </div>
   );
 };
-
 export default Search;

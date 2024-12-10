@@ -31,13 +31,13 @@ const Home: FC = () => {
 
   const onClickCategory = useCallback((index: number) => {
     dispatch(setCategoryId(index));
-  }, [])
+  }, [dispatch])
 
   const onChangePage = (page: number) => {
     dispatch(setCurrentPage(page));
   };
 
-  const getPizzas = async () => {
+  const getPizzas = useCallback(async () => {
     const sortBy = sort.sortProperty.replace('-', '');
     const order = sort.sortProperty.includes('-') ? 'asc' : 'desc';
     const category = categoryId > 0 ? `category=${categoryId}` : '';
@@ -54,7 +54,7 @@ const Home: FC = () => {
     );
 
     window.scrollTo(0, 0);
-  };
+  }, [categoryId, sort.sortProperty, searchValue, currentPage, dispatch]);
 
   // Если изменили параметры и был первый рендер, то делаем это
   useEffect(() => {
@@ -68,7 +68,7 @@ const Home: FC = () => {
       navigate(`?${querySrting}`);
     }
     isMounted.current = true;
-  }, [categoryId, sort.sortProperty, currentPage]);
+  }, [categoryId, sort.sortProperty, currentPage, navigate]);
 
   //Если был первый рендер, то проверяем URL-параметры и сохраняем в редаксе
   useEffect(() => {
@@ -85,12 +85,12 @@ const Home: FC = () => {
       );
       isSearch.current = true;
     }
-  }, []);
+  }, [dispatch]);
 
   // Если был первый рендер, то запрашиваем пиццы
   useEffect(() => {
     getPizzas();
-  }, [categoryId, sort.sortProperty, searchValue, currentPage]);
+  }, [getPizzas]);
 
   const pizzas = items.map((obj: any) => <PizzaBlock key={obj.id} {...obj} />);
   const skeletons = [...new Array(6)].map((_, index) => <Skeleton key={index} />);
@@ -113,6 +113,4 @@ const Home: FC = () => {
       <Pagination currentPage={currentPage} onChangePage={onChangePage} />
     </div>
   );
-};
-
-export default Home;
+};export default Home;
