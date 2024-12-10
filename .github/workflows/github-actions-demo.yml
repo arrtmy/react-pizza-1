@@ -13,12 +13,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: AppThreat/sast-scan-action@master
-          with:
-            type: "python"
+        with:
+          type: "python"
       - uses: actions/upload-artifact@v1
-          with:
-            name: reports
-            path: reports
+        with:
+          name: reports
+          path: reports
       - name: Strating Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
