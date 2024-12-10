@@ -22,14 +22,14 @@ jobs:
         run: npm run build
       - name: build storybook
         run: npm run build:storybook
+      - name: start server
+        run: npm start
       - name: unit test
         run: npm run test:unit
       - name: e2e test
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
-      - name: start server
-        run: npm run start
       - uses: AppThreat/sast-scan-action@master
         with:
           type: 'javascript'
