@@ -22,8 +22,6 @@ jobs:
         run: npm run build
       - name: build storybook
         run: npm run build:storybook
-      - name: start server
-        run: npm start
       - name: unit test
         run: npm run test:unit
       - name: e2e test
@@ -41,4 +39,4 @@ jobs:
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
         with:
-          target-url: 'http://localhost:3000'
+          target-url: 'https://ginandjuice.shop'
