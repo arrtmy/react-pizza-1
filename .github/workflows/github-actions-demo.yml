@@ -31,8 +31,8 @@ jobs:
       - name: SAST scan      
         uses: AppThreat/sast-scan-action@master
         with:
-          type: 'nodejs'
-      - name: Run DAST scan
+          type: 'NodeJsScan'
+      - name: DAST scan
         uses: PortSwigger/dastardly-github-action@main
         with:
           target-url: 'https://zesty-pithivier-c05109.netlify.app/'
