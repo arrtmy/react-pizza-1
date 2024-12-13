@@ -29,13 +29,8 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
-      - uses: symfonycorp/security-checker-action@v5
-        with:
-            disable-exit-code: 1
-            lock: subdir/composer.lock
-        id: security-check
-      - name: Display the vulnerabilities as JSON
-        run: echo ${{ steps.security-check.outputs.vulns }}
+      - name: Secret Scanner
+        uses: secret-scanner/action@0.0.2
       - name: SAST scan 2
         uses: Bastion-Technologies/gh-action-run-sast@v1
       - name: DAST scan
