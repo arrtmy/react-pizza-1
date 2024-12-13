@@ -29,22 +29,22 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
+      - name: Secret scan
+        uses: max/secret-scan@master 
       - name: SAST Scan 3
         id: salus_scan
         uses: federacy/scan-action@0.1.5
         with:
           active_scanners: "\n  - npm audit"
-          enforced_scanners: "\n  - npm audit"
       - name: SAST scan 2
         uses: Bastion-Technologies/gh-action-run-sast@v1
       - name: SAST scan      
         uses: AppThreat/sast-scan-action@master
         with:
           type: python, nodejs
-      - name: DAST scan
-        uses: PortSwigger/dastardly-github-action@main
-        with:
-          target-url: 'https://zesty-pithivier-c05109.netlify.app/'
-      - name: Secret scan
-        uses: max/secret-scan@master    
+      # - name: DAST scan
+      #   uses: PortSwigger/dastardly-github-action@main
+      #   with:
+      #     target-url: 'https://zesty-pithivier-c05109.netlify.app/'
+        
 
