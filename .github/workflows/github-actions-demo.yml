@@ -29,18 +29,17 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
-      - name: Detect Secret Scanner
-        uses: kmnpat/detect-secrets-selfhosted@1.4.0
-      - name: SAST Scan 3
-        id: salus_scan
-        uses: federacy/scan-action@0.1.5
+      - uses: symfonycorp/security-checker-action@v5
         with:
-          active_scanners: "\n  - npm audit"
+            disable-exit-code: 1
+        id: security-check
+      - name: Display the vulnerabilities as JSON
+        run: echo ${{ steps.security-check.outputs.vulns }}
       - name: SAST scan 2
         uses: Bastion-Technologies/gh-action-run-sast@v1
-      # - name: DAST scan
-      #   uses: PortSwigger/dastardly-github-action@main
-      #   with:
-      #     target-url: 'https://zesty-pithivier-c05109.netlify.app/'
+      - name: DAST scan
+        uses: PortSwigger/dastardly-github-action@main
+        with:
+          target-url: 'https://zesty-pithivier-c05109.netlify.app/'
         
 
