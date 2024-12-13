@@ -32,12 +32,8 @@ jobs:
         uses: AppThreat/sast-scan-action@master
         with:
           type: 'python'
-      - name: Run SOOS DAST Analysis
-        uses: soos-io/soos-dast-github-action@v2
+      - name: Run Nullify vulnerability scanner
+        uses: nullify-platform/dast-action@main
         with:
-          client_id: ${{ secrets.SOOS_CLIENT_ID }}
-          api_key: ${{ secrets.SOOS_API_KEY }}
-          project_name: "DAST-GitHub-Action-Test"
-          scan_mode: "fullscan"
-          api_url: "https://api.soos.io/api/"
-          target_url: "https://zesty-pithivier-c05109.netlify.app/"
+          app-name: 'My REST API'
+          target-host: 'zesty-pithivier-c05109.netlify.app'
