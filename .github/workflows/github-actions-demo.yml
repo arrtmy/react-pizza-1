@@ -32,6 +32,7 @@ jobs:
       - uses: symfonycorp/security-checker-action@v5
         with:
             disable-exit-code: 1
+            lock: subdir/composer.lock
         id: security-check
       - name: Display the vulnerabilities as JSON
         run: echo ${{ steps.security-check.outputs.vulns }}
