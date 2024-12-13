@@ -40,4 +40,4 @@ jobs:
           project_name: "DAST-GitHub-Action-Test"
           scan_mode: "fullscan"
           api_url: "https://api.soos.io/api/"
-          target-url: "https://zesty-pithivier-c05109.netlify.app/"
+          target_url: "https://zesty-pithivier-c05109.netlify.app/"
