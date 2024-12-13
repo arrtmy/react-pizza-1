@@ -28,10 +28,12 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
+      - name: SAST scan 2
+        uses: Bastion-Technologies/gh-action-run-sast@v1
       - name: SAST scan      
         uses: AppThreat/sast-scan-action@master
         with:
-          type: 'NodeJsScan'
+          type: 'Node.js'
       - name: DAST scan
         uses: PortSwigger/dastardly-github-action@main
         with:
