@@ -36,4 +36,5 @@ jobs:
         uses: nullify-platform/dast-action@main
         with:
           app-name: 'My REST API'
+          local: 'true'
           target-host: 'zesty-pithivier-c05109.netlify.app'
