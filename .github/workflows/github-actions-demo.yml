@@ -33,7 +33,7 @@ jobs:
       - name: SAST scan      
         uses: AppThreat/sast-scan-action@master
         with:
-          type: 'Node.js'
+          type: nodejs
       - name: DAST scan
         uses: PortSwigger/dastardly-github-action@main
         with:
