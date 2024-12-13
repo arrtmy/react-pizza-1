@@ -35,4 +35,6 @@ jobs:
       - name: Run DAST scan
         uses: PortSwigger/dastardly-github-action@main
         with:
+          output-filename: dastardly-report.xml
           target-url: 'https://zesty-pithivier-c05109.netlify.app/'
+
