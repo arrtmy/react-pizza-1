@@ -37,4 +37,4 @@ jobs:
         with:
           app-name: 'My REST API'
           spec-path: 'openapi.json'
-          target-host: 'zesty-pithivier-c05109.netlify.app'
+          target-host: 'https://zesty-pithivier-c05109.netlify.app/'
