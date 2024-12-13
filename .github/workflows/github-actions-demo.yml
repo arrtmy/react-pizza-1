@@ -33,7 +33,7 @@ jobs:
         with:
           type: 'python'
       - name: Run Nullify vulnerability scanner
-        uses: nullify-platform/dast-action@main
+        uses: nullify-platform/dast-action@master
         with:
           app-name: 'My REST API'
           spec-path: 'openapi.json'
