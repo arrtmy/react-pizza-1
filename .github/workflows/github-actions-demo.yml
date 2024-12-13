@@ -32,9 +32,7 @@ jobs:
         uses: AppThreat/sast-scan-action@master
         with:
           type: 'python'
-      - name: Run Nullify vulnerability scanner
-        uses: nullify-platform/dast-action@master
+      - name: Run DAST scan
+        uses: PortSwigger/dastardly-github-action@main
         with:
-          app-name: 'My REST API'
-          spec-path: 'openapi.json'
-          target-host: 'https://zesty-pithivier-c05109.netlify.app/'
+          target-url: 'https://zesty-pithivier-c05109.netlify.app/'
