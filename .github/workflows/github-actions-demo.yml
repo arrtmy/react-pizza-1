@@ -29,8 +29,13 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
-      - name: Secret Scanner
-        uses: secret-scanner/action@0.0.2
+      - name: Run Secrets Scanner
+        uses: Yash-srivastav16/github-secrets-scanner-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          repo: 'Yash-srivastav16/github-secrets-scanner-action'
+          branch: 'master'
+          patterns: 'API_KEY,SECRET_KEY,TOKEN'
       - name: SAST scan 2
         uses: Bastion-Technologies/gh-action-run-sast@v1
       - name: DAST scan
