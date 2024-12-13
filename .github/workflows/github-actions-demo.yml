@@ -7,6 +7,7 @@ on:
 jobs:
   init:
     runs-on: ubuntu-latest
+    if: ${{ github.actor != 'dependabot[bot]' }}
     strategy:
       matrix:
         node-version: [20.x]
