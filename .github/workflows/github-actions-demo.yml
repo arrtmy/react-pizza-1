@@ -29,9 +29,9 @@ jobs:
         run: npm run test:e2e
       - name: lint code
         run: npm run lint
-      - name: Execute Fides Action
+      - name: Secret scan
         uses: joocer/fides@main
-      - name: SAST scan 2
+      - name: SAST scan
         uses: Bastion-Technologies/gh-action-run-sast@v1
       - name: DAST scan
         uses: PortSwigger/dastardly-github-action@main
