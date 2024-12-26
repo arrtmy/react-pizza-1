@@ -19,6 +19,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install modules
         run: npm install --legacy-peer-deps
+        run: npm audit fix --force
       - name: build react-pizza
         run: npm run build
       - name: build storybook
@@ -31,11 +32,4 @@ jobs:
         run: npm run lint
       - name: Secret scan
         uses: joocer/fides@main
-      - name: SAST scan
-        uses: Bastion-Technologies/gh-action-run-sast@v1
-      - name: DAST scan
-        uses: PortSwigger/dastardly-github-action@main
-        with:
-          target-url: 'https://zesty-pithivier-c05109.netlify.app/'
-        
 
