@@ -25,7 +25,7 @@ jobs:
           fix: true # To create pull requests with npm audit fix
           github-token: ${{ secrets.TOKEN }} # github token to create the pull request. Here you need to have a secret named TOKEN.
       - name: NPM Audit Comment
-        uses: wx-jayesh/actions-npm-audit-comment@v1
+        uses: wx-jayesh/actions-npm-audit-comment@v2
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
       - name: build react-pizza
