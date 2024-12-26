@@ -18,8 +18,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: install modules
-        run: npm install --
-      - name: npm audit fix
+        run: npm install
+      - name: run npm audit
+        run: npm audit
+      - name: run npm audit fix
         run: npm audit fix
       - name: build react-pizza
         run: npm run build
@@ -36,5 +38,5 @@ jobs:
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
         with:
-          target-url: 'https://ginandjuice.shop'
+          target-url: 'http://localhost:3000'
 
