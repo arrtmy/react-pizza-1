@@ -19,6 +19,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install modules
         run: npm install --legacy-peer-deps
+      - name: npm audit
+        run: npm audit
+      - name: npm audit fix
+        run: npm audit fix
       - name: build react-pizza
         run: npm run build
       - name: build storybook
