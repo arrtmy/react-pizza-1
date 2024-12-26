@@ -16,12 +16,8 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install modules
-        run: npm install --legacy-peer-deps
-      - name: build react-pizza
-        run: npm run build
       - name: Run Dastardly Action Step
         continue-on-error: true # This allows subsequent steps to run even if this step fails
         uses: PortSwigger/dastardly-github-action@main
         with:
-          target-url: 'http://localhost:3000/'
+          target-url: 'https://zesty-pithivier-c05109.netlify.app'

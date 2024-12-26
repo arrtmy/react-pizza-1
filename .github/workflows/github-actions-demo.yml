@@ -31,4 +31,8 @@ jobs:
         run: npm run lint
       - name: Secret scan
         uses: joocer/fides@main
+      - name: Run Dastardly Action Step
+        uses: PortSwigger/dastardly-github-action@main
+        with:
+          target-url: 'http://localhost:3000'
 
