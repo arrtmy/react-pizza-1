@@ -19,11 +19,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install modules
         run: npm install --legacy-peer-deps
-      - name: npm audit
-        uses: luisfontes19/npm-audit-action@v0.1.0
+      - name: audit fix
+        uses: grandmasterdev/github-action-npm-audit-fix@latest
         with:
-          fix: true # To create pull requests with npm audit fix
-          github-token: ${{ secrets.GITHUB_TOKEN }} # github token to create the pull request. Here you need to have a secret named TOKEN.
+          working-dir: ${{github.workspace}}
+          github-user: 'action-committer'
+          github-email: 'action-committer'
+          github-token: ${{github.token}}
+          github-remote: 'origin'
       - name: build react-pizza
         run: npm run build
       - name: build storybook
