@@ -23,7 +23,7 @@ jobs:
         uses: luisfontes19/npm-audit-action@v0.1.0
         with:
           fix: true # To create pull requests with npm audit fix
-          github-token: ${{ secrets.TOKEN }} # github token to create the pull request. Here you need to have a secret named TOKEN.
+          github-token: ${{ secrets.GITHUB_TOKEN }} # github token to create the pull request. Here you need to have a secret named TOKEN.
       - name: build react-pizza
         run: npm run build
       - name: build storybook
