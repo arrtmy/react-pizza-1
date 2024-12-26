@@ -7,7 +7,6 @@ on:
 jobs:
   init:
     runs-on: ubuntu-latest
-    if: ${{ github.actor != 'dependabot[bot]' }}
     strategy:
       matrix:
         node-version: [20.x]
@@ -22,9 +21,3 @@ jobs:
         uses: PortSwigger/dastardly-github-action@main
         with:
           target-url: 'https://zesty-pithivier-c05109.netlify.app/'
-      # You can replace this next step with any JUnit XML parser of your choosing
-      - name: Publish Test Report
-        if: always() # Forces this step to always run
-        uses: mikepenz/action-junit-report@v3
-        with:
-          report_paths: '**/dastardly-report.xml' # You need to update this path if you pass in a different output filename to the Dastardly action
