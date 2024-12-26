@@ -24,4 +24,4 @@ jobs:
         continue-on-error: true # This allows subsequent steps to run even if this step fails
         uses: PortSwigger/dastardly-github-action@main
         with:
-          target-url: 'https://zesty-pithivier-c05109.netlify.app/'
+          target-url: 'http://localhost:3000/'
