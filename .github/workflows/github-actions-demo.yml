@@ -19,14 +19,10 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: install modules
         run: npm install --legacy-peer-deps
-      - name: audit fix
-        uses: grandmasterdev/github-action-npm-audit-fix@latest
-        with:
-          working-dir: ${{github.workspace}}
-          github-user: 'action-committer'
-          github-email: 'action-committer'
-          github-token: ${{github.token}}
-          github-remote: 'origin'
+      - name: npm audit
+        run: npm audit --audit-level
+      - name: npm audit fix
+        run: npm audit fix
       - name: build react-pizza
         run: npm run build
       - name: build storybook
