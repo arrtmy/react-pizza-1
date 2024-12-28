@@ -38,12 +38,12 @@ jobs:
         run: npm run lint
       - name: Secret scan
         uses: joocer/fides@main
-      # - name: Build Docker image
-      #   run: |
-      #     docker build -t my-image .
-      # - name: Run Docker container
-      #   run: |
-      #     docker run --name my-container my-image
+      - name: Build Docker image
+        run: |
+          docker build -t my-image .
+      - name: Run Docker container
+        run: |
+          docker run -d --name my-container my-image
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
         with:
