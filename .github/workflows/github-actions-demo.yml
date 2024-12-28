@@ -41,7 +41,6 @@ jobs:
           docker run -d --name my-container my-image 
       - name: Run Docker Compose
         run: |
-          echo "URL=http://localhost:3000" >> $GITHUB_ENV  # Замените на нужный URL
           docker-compose up -d
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
