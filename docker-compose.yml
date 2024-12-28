@@ -1,7 +1,7 @@
    version: '3'
    services:
      web:
-       image: ghcr.com/arrtmy/react-pizza-1:latest 
+       image: ghcr.io/arrtmy/react-pizza-1:latest 
          - "3000:3000"
        environment:
          - URL=${http://localhost:3000} 

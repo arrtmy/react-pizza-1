@@ -3,7 +3,7 @@ name: Deploy to GitHub Container Registry
 on:
   push:
     branches:
-      - master  # Укажите вашу основную ветку
+      - master
 
 jobs:
   build:
@@ -15,18 +15,19 @@ jobs:
       - name: Log in to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          registry: ghcr.com
+          registry: ghcr.io
           username: ${{ github.actor }}
-          token: ${{ secrets.GITHUB_TOKEN }} 
+          token: ${{ secrets.GITHUB_TOKEN }}
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v2
         with:
           context: .
-          push: true
-          tags: ghcr.com/arrtmy/react-pizza-1:latest 
+          file: ./docker-compose.yml  
+          tags: ghcr.io/arrtmy/react-pizza-1:latest
       - name: Run Docker Compose
         run: |
-          echo "URL=http://localhost:3000" >> $GITHUB_ENV  # Замените на нужный URL
+          echo "URL=http://localhost:3000" >> $GITHUB_ENV
           docker-compose up -d
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main

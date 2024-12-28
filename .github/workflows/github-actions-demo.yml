@@ -38,7 +38,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.com/arrtmy/react-pizza-1:latest 
+          tags: ghcr.io/arrtmy/react-pizza-1:latest 
       - name: Run Docker Compose
         run: |
           echo "URL=http://localhost:3000" >> $GITHUB_ENV  # Замените на нужный URL
