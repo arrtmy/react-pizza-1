@@ -35,6 +35,11 @@ jobs:
         run: npm run lint
       - name: Secret scan
         uses: joocer/fides@main
+      - name: Start container with website
+        run: |
+          docker-compose up -d
+      - name: Wait for container to be ready
+        run: sleep 30
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
         with:
