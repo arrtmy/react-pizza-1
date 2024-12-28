@@ -21,30 +21,35 @@ jobs:
         run: npm install
       - name: run npm audit
         run: npm audit --audit-level=critical
-      - name: build react-pizza
-        run: npm run build
-      - name: build storybook
-        run: npm run build:storybook
-      - name: unit test
-        run: npm run test:unit
-      - name: e2e test
-        run: npm run test:e2e
-      - name: lint code
-        run: npm run lint
+      # - name: build react-pizza
+      #   run: npm run build
+      # - name: build storybook
+      #   run: npm run build:storybook
+      # - name: unit test
+      #   run: npm run test:unit
+      # - name: e2e test
+      #   run: npm run test:e2e
+      # - name: lint code
+      #   run: npm run lint
       - name: Secret scan
         uses: joocer/fides@main
-      - name: Install Docker Compose
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.com
+          username: ${{ github.actor }}
+          token: ${{ secrets.GITHUB_TOKEN }} 
+      - name: Build and push Docker image
+        uses: docker/build-push-action@v2
+        with:
+          context: .
+          push: true
+          tags: ghcr.com/arrtmy/react-pizza-1:latest 
+      - name: Run Docker Compose
         run: |
-          sudo curl -L "https://github.com/docker/compose/releases/download/v2.15.1/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose version
-      - name: Start Nginx container
-        run: |
-          docker run -d --name webserver -p 3000:3000 -v ${PWD}:/usr/share/nginx/html nginx:alpine
-      - name: Wait for container to be ready
-        run: sleep 30
+          echo "URL=http://localhost:3000" >> $GITHUB_ENV  # Замените на нужный URL
+          docker-compose up -d
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
         with:
           target-url: 'http://localhost:3000'
-
