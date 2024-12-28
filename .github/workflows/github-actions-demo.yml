@@ -21,24 +21,24 @@ jobs:
         run: npm install
       - name: run npm audit
         run: npm audit --audit-level=critical
-      # - name: build react-pizza
-      #   run: npm run build
-      # - name: build storybook
-      #   run: npm run build:storybook
-      # - name: unit test
-      #   run: npm run test:unit
-      # - name: e2e test
-      #   run: npm run test:e2e
-      # - name: lint code
-      #   run: npm run lint
+      - name: build react-pizza
+        run: npm run build
+      - name: build storybook
+        run: npm run build:storybook
+      - name: unit test
+        run: npm run test:unit
+      - name: e2e test
+        run: npm run test:e2e
+      - name: lint code
+        run: npm run lint
       - name: Secret scan
         uses: joocer/fides@main
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v2
-        with:
-          context: .
-          push: true
-          tags: ghcr.io/arrtmy/react-pizza-1:latest 
+      - name: Build Docker image
+        run: |
+          docker build -t my-image .
+      - name: Run Docker container
+        run: |
+          docker run -d --name my-container my-image 
       - name: Run Docker Compose
         run: |
           echo "URL=http://localhost:3000" >> $GITHUB_ENV  # Замените на нужный URL
