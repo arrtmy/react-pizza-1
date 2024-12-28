@@ -2,7 +2,7 @@
 FROM node:20
 
 # Устанавливаем рабочую директорию
-WORKDIR /app
+WORKDIR /react-pizza
 
 # Копируем package.json и package-lock.json для установки зависимостей
 COPY package*.json ./
@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Команда для запуска приложения
-CMD ["npm run bild"]
+CMD ["npm", "start"]
