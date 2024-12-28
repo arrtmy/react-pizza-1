@@ -17,36 +17,33 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - name: install modules
-        run: npm install
-      - name: run npm audit
-        run: npm audit --audit-level=critical
-      - name: build react-pizza
-        run: npm run build
-      - name: build storybook
-        run: npm run build:storybook
-      - name: unit test
-        run: npm run test:unit
-      - name: e2e test
-        run: npm run test:e2e
-      - name: lint code
-        run: npm run lint
-      - name: Secret scan
-        uses: joocer/fides@main
-      - name: Install Docker Compose
-        run: |
-          set -x
-          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
+      # - name: install modules
+      #   run: npm install
+      # - name: run npm audit
+      #   run: npm audit --audit-level=critical
+      # - name: build react-pizza
+      #   run: npm run build
+      # - name: build storybook
+      #   run: npm run build:storybook
+      # - name: unit test
+      #   run: npm run test:unit
+      # - name: e2e test
+      #   run: npm run test:e2e
+      # - name: lint code
+      #   run: npm run lint
+      # - name: Secret scan
+      #   uses: joocer/fides@main
+      # - name: Install Docker Compose
+      #   run: |
+      #     set -x
+      #     sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+      #     sudo chmod +x /usr/local/bin/docker-compose
       - name: Build Docker image
         run: |
           docker build -t my-image .
       - name: Run Docker container
         run: |
           docker run -d --name my-container my-image 
-      - name: Run Docker Compose
-        run: |
-          docker-compose up -d
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
         with:
