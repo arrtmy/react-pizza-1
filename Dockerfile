@@ -17,4 +17,4 @@ COPY . .
 EXPOSE 3000
 
 # Команда для запуска приложения
-CMD ["npm", "npm run bild"]
+CMD ["npm", "run", "bild"]
