@@ -47,7 +47,7 @@ jobs:
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
         with:
-          target-url: 'http://localhost:3000/?sortProperty=rating&categoryId=0&currentPage=1'
+          target-url: 'https://localhost:3000/'
       - name: Stop server
         run: |
           kill $(cat server.pid)
