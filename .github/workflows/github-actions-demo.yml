@@ -33,6 +33,11 @@ jobs:
         run: npm run lint
       - name: Secret scan
         uses: joocer/fides@main
+      - name: Install Docker Compose
+        run: |
+          set -x
+          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
       - name: Build Docker image
         run: |
           docker build -t my-image .
@@ -41,7 +46,6 @@ jobs:
           docker run -d --name my-container my-image 
       - name: Run Docker Compose
         run: |
-          sudo chmod +x /usr/local/bin/docker-compose
           docker-compose up -d
       - name: Run Dastardly Action Step
         uses: PortSwigger/dastardly-github-action@main
