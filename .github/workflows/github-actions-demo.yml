@@ -41,10 +41,6 @@ jobs:
       - name: Start Nginx container
         run: |
           docker run -d --name webserver -p 3000:3000 -v ${PWD}:/usr/share/nginx/html nginx:alpine
-      - name: Start container with website
-        run: |
-          docker-compose up -d
-      # Шаг 4: Ожидание готовности контейнера
       - name: Wait for container to be ready
         run: sleep 30
       - name: Run Dastardly Action Step
