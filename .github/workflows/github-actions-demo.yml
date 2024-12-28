@@ -20,9 +20,7 @@ jobs:
       - name: install modules
         run: npm install
       - name: run npm audit
-        run: npm audit
-      - name: run npm audit fix
-        run: npm audit fix
+        run: npm audit --audit-level=info
       - name: build react-pizza
         run: npm run build
       - name: build storybook
